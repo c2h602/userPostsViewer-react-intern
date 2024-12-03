@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react";
 import Button from "../Button/Button";
 
-interface ISearchBarProps {
+interface ISearchBar {
     onSearch: (username: string) => void;
 }
 
-export default function SearchBar({onSearch}: ISearchBarProps) {
+export default function SearchBar({onSearch}: ISearchBar) {
 
     const [inputValue, setInputValue] = useState('');
 

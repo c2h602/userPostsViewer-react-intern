@@ -1,3 +1,4 @@
+
 interface IUser {
     id: number;
     username: string;
@@ -11,10 +12,12 @@ interface IUser {
 }
 
 interface ICardUser {
-    user: IUser
+    user: IUser;
+    onClick: (userId: number) => void;
 }
 
-export default function CardUser({user}: ICardUser) {
+
+export default function CardUser({user, onClick}: ICardUser) {
     
     return(
 
@@ -27,7 +30,14 @@ export default function CardUser({user}: ICardUser) {
             <div className="card__user_city">🏠 {user.address.city}</div>
             <div className="card__user_email">📧 {user.email}</div>
             <a className="card__user_website" href='#'>🌐 {user.website}</a>
-            <a className="card__user_posts" href={`/${user.username}/posts/`}>Posts</a>
+            <a className="card__user_posts" 
+               href={`/${user.username}/posts/`} 
+               onClick={(e) => {
+                e.preventDefault();
+                onClick(user.id);
+               }}
+            >Posts</a>
+
 
         </div>
         

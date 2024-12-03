@@ -1,9 +1,8 @@
-// import { useState } from 'react'
-
 import { useEffect, useState } from "react";
 import Header from "./Components/Header/Header";
 import SearchBar from "./Components/SearchBar/SearchBar";
 import CardUser from "./Components/CardUser/CardUser";
+import ContainerPost from "./Components/ContainerPost/ContainerPost";
 
 interface IUser {
   id: number;
@@ -18,29 +17,45 @@ interface IUser {
 }
 
 interface IPost {
+  title: string;
+  body: string;
   userId: number;
+  id: number;
+}
+
+interface IComments {
+  email: string;
+  body: string;
+  postId: number;
+  id: number;
 }
 
 export default function App() {
   
   const [users, setUsers] = useState<IUser[]>([]);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [comments, setComments] = useState<IComments[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [cardUser, setCardUser] = useState<IUser | null>(null);
+  const [userPosts, setUserPosts] = useState<IPost[]>([]);
+  const [isShowingPost, setIsShowingPost] = useState(false);
 
 
   const fetchData = async () => {
-    const [usersResponse, postsResponse] = await Promise.all([
+    const [usersResponse, postsResponse, commentsResponse] = await Promise.all([
       fetch('https://jsonplaceholder.typicode.com/users'),
-      fetch('https://jsonplaceholder.typicode.com/posts')
+      fetch('https://jsonplaceholder.typicode.com/posts'),
+      fetch('https://jsonplaceholder.typicode.com/comments')
     ]);
 
     const usersData = await usersResponse.json();
     const postsData = await postsResponse.json();
+    const commentsData = await commentsResponse.json();
 
     setUsers(usersData);
     setPosts(postsData);
+    setComments(commentsData);
 
   };
 
@@ -60,6 +75,7 @@ export default function App() {
 
     setFilteredUsers(filteredUsers);
     setCardUser(null);
+    setIsShowingPost(false);
 
   }
 
@@ -73,8 +89,21 @@ export default function App() {
     
   };
 
- 
-  
+  const handleOpenPosts = (userId: number) => {
+
+    const userPosts = posts
+      .filter((post: IPost) => post.userId === userId)
+        
+    setUserPosts(userPosts);
+    setIsShowingPost(true);
+
+    if(isShowingPost) {
+      setIsShowingPost(false);
+    } else {
+      setIsShowingPost(true);
+    }
+    
+  }
 
   return(
     <>
@@ -89,17 +118,22 @@ export default function App() {
          
           {cardUser ? (
             
-            <CardUser user={cardUser}/>
+            <CardUser user={cardUser}  onClick={handleOpenPosts}/>
           ) : (
             
             <ul className="card__list">
               {isSearching && filteredUsers.length === 0 ? (
+
                 <h2 style={{textAlign: 'center'}}>User not found... Try again 🔎</h2>
+
               ) : (
+                
                 filteredUsers.map((user) => {
                   const userPosts = posts.filter(post => post.userId === user.id);
+
                   return (
-                    <li key={user.id} className="card__item">
+
+                    <li className="card__item">
                       <a
                         className="card__username"
                         href={`/${user.username}/${user.id}/`}
@@ -112,6 +146,7 @@ export default function App() {
                       </a>
                       <p className="card__posts">{userPosts.length} posts</p>
                     </li>
+
                   );
                 })
               )}
@@ -122,6 +157,12 @@ export default function App() {
 
         
       </main>
+
+      {isShowingPost ? (
+      userPosts.map((post) => (
+        <ContainerPost post={post} />
+      ))
+    ) : null}
       
     </>
   )
