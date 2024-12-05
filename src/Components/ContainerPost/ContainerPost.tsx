@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Comments from "../Comments/Comments";
+import { Outlet, useParams } from "react-router";
 
 interface IPost {
     title: string;
@@ -19,9 +20,10 @@ interface IContainerPost {
 }
 
 export default function ContainerPost({post}: IContainerPost) {
+    const { postId } = useParams();
     const [comments, setComments] = useState<IComments[]>([]);
     const [showComments, setShowComments] = useState(false);
-
+    
     const handleOpenComments = async () => {
 
         if (!showComments && comments.length === 0) {
@@ -46,7 +48,7 @@ export default function ContainerPost({post}: IContainerPost) {
             <h2 className="title-post">{post.title}</h2>
             <p className="body-post">{post.body}</p>
             <a className="comments-post" 
-               href={`/comments?postId=${post.id}`}
+               href={`/comments?postId=${postId}`}
                onClick={(e) => {
                 e.preventDefault();
                 handleOpenComments();
@@ -63,7 +65,9 @@ export default function ContainerPost({post}: IContainerPost) {
                 ))}
         </div>
       )}
-            
+    
+    <Outlet />
+
         </div>
     )
 }

@@ -1,3 +1,5 @@
+import { useParams } from "react-router";
+import { Outlet } from "react-router";
 
 interface IUser {
     id: number;
@@ -18,6 +20,7 @@ interface ICardUser {
 
 
 export default function CardUser({user, onClick}: ICardUser) {
+    const params = useParams();
     
     return(
 
@@ -34,11 +37,11 @@ export default function CardUser({user, onClick}: ICardUser) {
                href={`/${user.username}/posts/`} 
                onClick={(e) => {
                 e.preventDefault();
-                onClick(user.id);
+                onClick(Number(params.userId));
                }}
             >Posts</a>
 
-
+        <Outlet />
         </div>
         
 
