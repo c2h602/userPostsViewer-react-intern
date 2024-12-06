@@ -23,18 +23,10 @@ interface IPost {
   id: number;
 }
 
-interface IComments {
-  email: string;
-  body: string;
-  postId: number;
-  id: number;
-}
-
 export default function App() {
   
   const [users, setUsers] = useState<IUser[]>([]);
   const [posts, setPosts] = useState<IPost[]>([]);
-  const [comments, setComments] = useState<IComments[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [cardUser, setCardUser] = useState<IUser | null>(null);
@@ -43,19 +35,16 @@ export default function App() {
 
 
   const fetchData = async () => {
-    const [usersResponse, postsResponse, commentsResponse] = await Promise.all([
+    const [usersResponse, postsResponse] = await Promise.all([
       fetch('https://jsonplaceholder.typicode.com/users'),
-      fetch('https://jsonplaceholder.typicode.com/posts'),
-      fetch('https://jsonplaceholder.typicode.com/comments')
+      fetch('https://jsonplaceholder.typicode.com/posts')
     ]);
 
     const usersData = await usersResponse.json();
     const postsData = await postsResponse.json();
-    const commentsData = await commentsResponse.json();
 
     setUsers(usersData);
     setPosts(postsData);
-    setComments(commentsData);
 
   };
 
@@ -133,7 +122,7 @@ export default function App() {
 
                   return (
 
-                    <li className="card__item">
+                    <li key={user.id} className="card__item">
                       <a
                         className="card__username"
                         href={`/${user.username}/${user.id}/`}

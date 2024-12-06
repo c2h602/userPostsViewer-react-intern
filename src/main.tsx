@@ -13,15 +13,12 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App />} errorElement={<ErrorPage />} />
 
-        <Route path='/user/:id' element={<CardUser />} >
+        <Route path='/' element={<App />} errorElement={<ErrorPage />}>
 
-          <Route path='posts' element={<ContainerPost  />}>
-
-            <Route path=':postId/comments' element={<Comments  />} />
-
-          </Route>
+          <Route path='/user/:userId' element={<CardUser />} />
+          <Route path='posts' element={<ContainerPost />} />
+          <Route path=':postId/comments' element={<Comments />} />
 
         </Route>
 

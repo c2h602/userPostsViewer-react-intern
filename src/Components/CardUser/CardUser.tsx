@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import { Outlet } from "react-router";
 
@@ -20,7 +21,14 @@ interface ICardUser {
 
 
 export default function CardUser({user, onClick}: ICardUser) {
-    const params = useParams();
+    const { userId } = useParams<{ userId: string }>();
+
+    useEffect(() => {
+        if (userId) {
+            const id = Number(userId);
+            onClick(id);
+        }
+    }, [userId, onClick])
     
     return(
 
@@ -32,12 +40,12 @@ export default function CardUser({user, onClick}: ICardUser) {
             <h3 className="card__user_name">{user.name}</h3>
             <div className="card__user_city">🏠 {user.address.city}</div>
             <div className="card__user_email">📧 {user.email}</div>
-            <a className="card__user_website" href='#'>🌐 {user.website}</a>
+            <a className="card__user_website" href={user.website}>🌐 {user.website}</a>
             <a className="card__user_posts" 
                href={`/${user.username}/posts/`} 
                onClick={(e) => {
                 e.preventDefault();
-                onClick(Number(params.userId));
+                onClick(Number(userId));
                }}
             >Posts</a>
 
