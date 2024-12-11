@@ -1,9 +1,7 @@
-import CardUser from "../Components/CardUser/CardUser";
+import CardUser from '../Components/CardUser/CardUser'
 
 export const UserPage = () => {
   return (
-    <>
-      <CardUser />
-    </>
-  );
-};
+      <CardUser/>
+  )
+}

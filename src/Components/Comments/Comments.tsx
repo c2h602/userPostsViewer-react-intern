@@ -1,5 +1,7 @@
-import { IComment } from '../../types/types';
-
+interface IComment {
+    email: string;
+    body: string;
+}
 
 export default function Comments({email, body}: IComment) {
 

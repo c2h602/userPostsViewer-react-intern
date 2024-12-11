@@ -11,15 +11,6 @@ export interface IUser {
   posts: IPost[];
 }
 
-export interface IPost {
-  title: string;
-  body: string;
-  userId: number;
-  id: number;
-  comments: IComment[];
-}
-
-
 export interface IComment {
   email: string;
   body: string;
@@ -27,3 +18,10 @@ export interface IComment {
   id: number;
 }
 
+export interface IPost {
+  title: string;
+  body: string;
+  userId: number;
+  id: number;
+  comments: IComment[];
+}

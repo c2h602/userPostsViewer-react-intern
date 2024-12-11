@@ -67,7 +67,19 @@ a {
   color: var(--link-color);
 }
 
-.container,
+.container{
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin-top: 20px;
+}
 .container-posts {
   background-color: var(--container-background-color);
   display: flex;
@@ -127,7 +139,7 @@ button {
   height: 40px;
   margin-top: 2.5rem; /* 40px;  */
   margin-bottom: 1.5rem; /* 20px; */
-  padding: 0px 20px;
+  padding: 0rem 1.5rem;
   transition: background-color 0.3s ease;
 }
 
@@ -136,8 +148,15 @@ button:hover {
 }
 
 .card {
+  background-color: var(--container-background-color);
+  display: flex;
+  align-items: start;
   width: 100%;
-  max-width: 80vw;
+  height: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 1.5rem 1.5rem;
 }
 
 .card__list {
@@ -246,7 +265,7 @@ button:hover {
   }
 
   .card {
-    max-width: 75rem; /* 1200px */
+    max-width: 90%; /* 1200px */
   }
 
   .card__username {

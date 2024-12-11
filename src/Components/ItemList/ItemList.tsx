@@ -1,21 +1,22 @@
-import { Link } from "react-router";
+import { Link } from 'react-router';
 
-interface IUsersListItem {
+interface IItemList {
   id: number,
   username: string,
   postsLength: number
 }
 
-export default function UsersListItem({id, username, postsLength}: IUsersListItem) {
+
+export const ItemList = ({id, username, postsLength}: IItemList) => {
   return (
     <li key={id} className="card__item">
       <Link
         className="card__username"
-        to={`/${username}/${id}/`}
+        to={`/user/${id}/`}
       >
         {username}
       </Link>
       <p className="card__posts">{postsLength} posts</p>
     </li>
-  );
+  )
 }

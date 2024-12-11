@@ -1,14 +1,24 @@
-import UsersListItem from "../UsersListItem/UsersListItem";
+import { useUsers } from "../../context/useUsers";
+import { IUser } from "../../types/types";
+import { ItemList } from "../ItemList/ItemList";
 
-export default function UsersList() {
-
-    return (
-        <ul className="card__list">
-            <UsersListItem 
-                id={user.id}
-                username={user.username}
-                postsLength={user.posts.length}
-            />
-        </ul>
-    )
-}
+export const UsersList = () => {
+  
+  const { filteredUsers, isSearching } = useUsers();
+ 
+  return (
+    <ul className="card__list">
+      {isSearching && filteredUsers.length === 0 ? (
+        <h2 style={{ textAlign: "center" }}>User not found... Try again 🔎</h2>
+      ) : (
+        filteredUsers.map((user: IUser) => (
+          <ItemList
+            id={user.id}
+            username={user.username}
+            postsLength={user.posts.length}
+          />
+        ))
+      )}
+    </ul>
+  );
+};

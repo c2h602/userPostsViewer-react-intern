@@ -1,15 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Comments from "../Comments/Comments";
-import { IPost, IComment } from "../../types/types";
+import { Outlet, useParams } from "react-router";
+
+interface IPost {
+  title: string;
+  body: string;
+  id: number;
+}
+
+interface IComments {
+  email: string;
+  body: string;
+  postId: number;
+  id: number;
+}
 
 interface IContainerPost {
   post: IPost;
-  // comment: IComment;
 }
 
 export default function ContainerPost({ post }: IContainerPost) {
-  const [comments, setComments] = useState<IComment[]>([]);
+  const params = useParams<{ postId: string }>();
+  const [comments, setComments] = useState<IComments[]>([]);
   const [showComments, setShowComments] = useState(false);
+
+  fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`)
+    .then((response) => response.json())
+    .then((x) => setComments(x));
+
+  useEffect(() => {
+    if (params.postId) {
+      handleOpenComments(params.postId);
+    }
+  }, [params.postId]);
 
   const handleOpenComments = async (postId: string) => {
     if (!showComments && comments.length === 0) {
@@ -46,14 +69,15 @@ export default function ContainerPost({ post }: IContainerPost) {
         <div>
           {comments.map((comment) => (
             <Comments
-              postId={post.id}
-              id={id}
+              key={comment.id}
               email={comment.email}
               body={comment.body}
             />
           ))}
         </div>
       )}
+
+      <Outlet />
     </div>
   );
 }

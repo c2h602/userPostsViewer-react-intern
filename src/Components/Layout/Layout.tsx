@@ -1,12 +1,15 @@
-import { ReactNode } from "react";
+import { ReactElement } from "react";
 import Header from "../Header/Header";
 import SearchBar from "../SearchBar/SearchBar";
+import { useUsers } from "../../context/useUsers";
 
-interface ILayout {
-  children: ReactNode;
+interface LayoutProps {
+  children: ReactElement;
 }
 
-export default function Layout({ children }: ILayout) {
+export const Layout = ({ children }: LayoutProps) => {
+  const { handleSearch } = useUsers();
+  
   return (
     <>
       <Header />
@@ -16,4 +19,4 @@ export default function Layout({ children }: ILayout) {
       </main>
     </>
   );
-}
+};
