@@ -1,80 +1,59 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Comments from "../Comments/Comments";
-import { Outlet, useParams } from "react-router";
-
-interface IPost {
-    title: string;
-    body: string;
-    id: number;
-}
-
-interface IComments {
-    email: string;
-    body: string;
-    postId: number;
-    id: number;
-}
+import { IPost, IComment } from "../../types/types";
 
 interface IContainerPost {
-    post: IPost;
+  post: IPost;
+  // comment: IComment;
 }
 
-export default function ContainerPost({post}: IContainerPost) {
-    const params = useParams<{ postId: string }>();
-    const [comments, setComments] = useState<IComments[]>([]);
-    const [showComments, setShowComments] = useState(false);
+export default function ContainerPost({ post }: IContainerPost) {
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [showComments, setShowComments] = useState(false);
 
-    useEffect(() => {
+  const handleOpenComments = async (postId: string) => {
+    if (!showComments && comments.length === 0) {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
+      ).then((response) => response.json());
 
-        if (params.postId) {
-            handleOpenComments(params.postId);
-        }
-        
-    }, [params.postId]);
-    
-    const handleOpenComments = async (postId: string) => {
+      setComments(response);
+    }
 
-        if (!showComments && comments.length === 0) {
-            const response = await fetch(
-                `https://jsonplaceholder.typicode.com/comments?postId=${postId}`
-            ).then((response) => response.json());
-          
-            setComments(response);
-        }
+    if (showComments) {
+      setShowComments(false);
+    } else {
+      setShowComments(true);
+    }
+  };
 
-        if(showComments) {
-            setShowComments(false)
-        } else {
-            setShowComments(true)
-        }
+  return (
+    <div className="container-posts">
+      <h2 className="title-post">{post.title}</h2>
+      <p className="body-post">{post.body}</p>
+      <a
+        className="comments-post"
+        href={`/comments?postId=${post.id}`}
+        onClick={(e) => {
+          e.preventDefault();
+          handleOpenComments(post.id.toString());
+        }}
+      >
+        💬 {comments.length}
+      </a>
 
-    };
-
-    return(
-        <div className="container-posts">
-            <h2 className="title-post">{post.title}</h2>
-            <p className="body-post">{post.body}</p>
-            <a className="comments-post" 
-               href={`/comments?postId=${post.id}`}
-               onClick={(e) => {
-                e.preventDefault();
-                handleOpenComments(post.id.toString());
-               }}
-            >
-                💬 {comments.length}
-            </a>
-
-        {showComments && (
-            <div> 
-                {comments.map((comment) => (
-                    <Comments email={comment.email} 
-                              body={comment.body} />
-                ))}
+      {showComments && (
+        <div>
+          {comments.map((comment) => (
+            <Comments
+              postId={post.id}
+              id={id}
+              email={comment.email}
+              body={comment.body}
+            />
+          ))}
         </div>
       )}
-    
-    <Outlet />
-
-        </div>
-    )
+    </div>
+  );
 }

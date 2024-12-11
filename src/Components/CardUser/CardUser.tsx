@@ -1,57 +1,68 @@
-import { useEffect } from "react";
-import { useParams } from "react-router";
-import { Outlet } from "react-router";
-
-interface IUser {
-    id: number;
-    username: string;
-    name: string;
-    address: {
-        city: string;
-    };
-    email: string;
-    phone: string;
-    website: string;
-}
+import { useState, useEffect } from "react";
+import {
+  Link,
+  useNavigate,
+  useParams,
+} from "react-router";
+import { IUser } from "../../types/types";
+import Button from "../Button/Button";
+import ContainerPost from "../ContainerPost/ContainerPost";
 
 interface ICardUser {
-    user: IUser;
-    onClick: (userId: number) => void;
+  user: IUser;
+  onClick: (userId: number) => void;
 }
 
+export default function CardUser({ user, onClick }: ICardUser) {
+  const { userId } = useParams();
+  const navigate = useNavigate();
+  const [isPostsActive, setIsPostsActive] = useState(false);
 
-export default function CardUser({user, onClick}: ICardUser) {
-    const { userId } = useParams<{ userId: string }>();
+  useEffect(() => {
+    if (userId) {
+      const id = Number(userId);
+      onClick(id);
+    }
+  }, [userId, onClick]);
 
-    useEffect(() => {
-        if (userId) {
-            const id = Number(userId);
-            onClick(id);
-        }
-    }, [userId, onClick])
-    
-    return(
+  return (
+    <div className="card">
+      <div className="card__user">
+        <Button className="btnBack" onClick={() => navigate(-1)}>
+          Back
+        </Button>
 
-        <div className="card__user">
+        <h1 className="card__user_username">{user.username}</h1>
+        <h3 className="card__user_name">{user.name}</h3>
+        <div className="card__user_city">🏠 {user.address.city}</div>
+        <div className="card__user_email">📧 {user.email}</div>
+        <a className="card__user_website" href={user.website}>
+          🌐 {user.website}
+        </a>
+        {/* <a
+        className="card__user_posts"
+        href={`/${user.username}/posts/`}
+        onClick={(e) => {
+          e.preventDefault();
+          onClick(Number(userId));
+        }}
+      >
+        Posts
+      </a> */}
 
-            <button className="btnBack">Back</button>
+        <Link
+          className="card__user_posts"
+          to={`/posts/`}
+          onClick={() => setIsPostsActive(true)}
+        >
+          Posts
+        </Link>
+      </div>
 
-            <h1 className="card__user_username">{user.username}</h1>
-            <h3 className="card__user_name">{user.name}</h3>
-            <div className="card__user_city">🏠 {user.address.city}</div>
-            <div className="card__user_email">📧 {user.email}</div>
-            <a className="card__user_website" href={user.website}>🌐 {user.website}</a>
-            <a className="card__user_posts" 
-               href={`/${user.username}/posts/`} 
-               onClick={(e) => {
-                e.preventDefault();
-                onClick(Number(userId));
-               }}
-            >Posts</a>
-
-        <Outlet />
-        </div>
-        
-
-    )
+      {isPostsActive && user.posts.map((post) => 
+        <ContainerPost post={post} />
+      )}
+      
+    </div>
+  );
 }
