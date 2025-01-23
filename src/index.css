@@ -1,18 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 :root {
-  --background-color: #f0f0f0;
-  --container-background-color: white;
+  --background-color: #bdf1a6;
+  --container-background-color: rgba(255, 255, 255, 0.329);
   --text-color: #59636e;
-  --border-color: #d1d9e0;
+  --border-color: #84b66fad;
 
-  --button-background-color: #0969da;
-  --button-border-color: #0969da;
+  --button-background-color: #97cb80ad;
+  --button-border-color: #97cb80ad;
   --button-text-color: white;
- 
 
-  --header-background-color: #d9f0ff;
-  --search-input-border-color: #d1d9e0;
+  --header-background-color: rgba(255, 255, 255, 0.39);
+  --search-input-background-color: rgba(255, 255, 255, 0.226);
   --link-color: #59636e;
 
   color-scheme: light;
@@ -21,19 +20,18 @@
 .dark {
   --background-color: #161617;
   --text-color: #c9cccf;
-  --border-bottom: 1px solid #26282b;;
+  --border-bottom: 1px solid #26282b;
 
   --header-background-color: #26282b;
 
-  --button-background-color: #0969da;
-  --button-border-color: #0969da;
+  --button-background-color: #35373a;
+  --button-border-color:#35373a;
   --button-text-color: white;
 
   --container-background-color: #232324;
   --link-color: #c9cccf;
   --search-input-border-color: #35373a;
 }
-
 
 html {
   font-size: 100%;
@@ -48,7 +46,7 @@ body {
 header {
   background-color: var(--header-background-color);
   border-bottom: var(--border-bottom);
-  padding: 1.875rem; /* 30px */
+  padding: 0;
 }
 
 .themeToggle {
@@ -67,8 +65,8 @@ a {
   color: var(--link-color);
 }
 
-.container{
-  background-color: transparent;
+.container {
+  background-color: var(--container-background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,7 +100,7 @@ a {
   display: flex;
   justify-content: center;
   width: 100%;
-  border-bottom: 1px solid #d1d9e0;
+  border-bottom: 1px solid #84b66fad;
   margin-bottom: 1rem;
 }
 
@@ -114,16 +112,17 @@ a {
   margin-bottom: 1.5rem; /* 20px; */
   padding: 0.3125rem 0.625rem; /* 5px 10px; */
   border-style: solid;
-  border-color: var(--search-input-border-color);
+  border-color: var(--search-input-background-color);
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 0.875rem; /* 14px; */
   transition: border-color 0.3s ease;
+  background-color: var(--search-input-background-color);
 }
 
 .search__input:hover,
-.search__input:focus  {
-  border-color: #0969da;
+.search__input:focus {
+  border-color: #97cb80ad;;
   outline: none;
 }
 
@@ -144,23 +143,32 @@ button {
 }
 
 button:hover {
-  background-color: #0f56c2;
+  background-color: #83b16fad;
+}
+
+.themeToggle {
+  background-color: transparent;
+  border-color: transparent;
+}
+.themeToggle:hover {
+  background-color: transparent;
 }
 
 .card {
-  background-color: var(--container-background-color);
+  background-color: transparent;
   display: flex;
   align-items: start;
   width: 100%;
   height: 100%;
-  margin: 0 auto;
   box-sizing: border-box;
   border-radius: 10px;
-  padding: 1.5rem 1.5rem;
+  padding: 0 0.5rem 1.5rem;
 }
 
 .card__list {
   list-style-type: none;
+  background-color: transparent;;
+  border-radius: 10px;
   width: 100%;
   box-sizing: border-box;
   padding: 0;
@@ -178,7 +186,7 @@ button:hover {
   margin-top: 1.5rem;
   font-size: 1.25rem; /* 20px; */
   font-weight: bold;
-  color: #0969da;
+  color: #759e63ad;
   text-decoration: none;
 }
 
@@ -192,9 +200,11 @@ button:hover {
 }
 
 .card__user {
-  background-color: var(--container-background-color);
   text-align: start;
-  
+}
+
+.card__user_posts:hover {
+  text-decoration: underline;
 }
 
 .btnBack {
@@ -204,13 +214,12 @@ button:hover {
 .card__user_posts {
   margin-top: 1.25rem;
   font-weight: 500;
-  color: #0969da;
+  color: #567549ad;;
 }
 
 .email-comment {
   border-top: 1px solid #d1d9e0;
   padding-top: 1.25rem;
-  
 }
 
 .dark {
@@ -247,9 +256,10 @@ button:hover {
     font-size: 1.125rem; /* 18px */
   }
 
-  .card__posts {
-    font-size: 0.75rem; /* 12px */
+  h2 {
+    font-size: 0.5rem;
   }
+
 }
 
 @media (max-width: 1024px) {
@@ -264,8 +274,9 @@ button:hover {
     height: 40px;
   }
 
-  .card {
-    max-width: 90%; /* 1200px */
+  .card,
+  .container-posts {
+    max-width: 100%; /* 1200px */
   }
 
   .card__username {
@@ -276,4 +287,7 @@ button:hover {
     height: 50px;
   }
 
+  header {
+    padding: 0;
+  };
 }

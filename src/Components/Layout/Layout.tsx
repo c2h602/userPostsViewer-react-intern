@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import Header from "../Header/Header";
 import SearchBar from "../SearchBar/SearchBar";
 import { useUsers } from "../../context/useUsers";
 
 interface LayoutProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {

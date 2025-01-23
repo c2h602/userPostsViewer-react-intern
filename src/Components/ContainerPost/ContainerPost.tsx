@@ -1,19 +1,7 @@
 import { useState, useEffect } from "react";
 import Comments from "../Comments/Comments";
 import { Outlet, useParams } from "react-router";
-
-interface IPost {
-  title: string;
-  body: string;
-  id: number;
-}
-
-interface IComments {
-  email: string;
-  body: string;
-  postId: number;
-  id: number;
-}
+import { IComment, IPost } from "../../types/types";
 
 interface IContainerPost {
   post: IPost;
@@ -21,7 +9,7 @@ interface IContainerPost {
 
 export default function ContainerPost({ post }: IContainerPost) {
   const params = useParams<{ postId: string }>();
-  const [comments, setComments] = useState<IComments[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [showComments, setShowComments] = useState(false);
 
   fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post.id}`)
