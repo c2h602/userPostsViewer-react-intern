@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Outlet } from "react-router";
 import { IUser } from "../../types/types";
-import { useUsers } from "../../context/useUsers";
+import { useUsersStore } from "../../useUsersStore";
 import ContainerPost from "../ContainerPost/ContainerPost";
 import Button from "../Button/Button";
 
 export default function CardUser() {
   const navigate = useNavigate();
   const { userId } = useParams<{ userId: string }>();
-  const { filteredUsers } = useUsers();
   const [user, setUser] = useState<IUser | null>(null);
   const [isPostsActive, setIsPostsActive] = useState(false);
+  const filteredUsers = useUsersStore((state) => state.filteredUsers);
 
   useEffect(() => {
     const user = filteredUsers.find(
@@ -20,7 +20,7 @@ export default function CardUser() {
     if (user) {
       setUser(user);
     }
-  }, [filteredUsers]);
+  }, [filteredUsers, userId]);
 
   if (!user) {
     return null;

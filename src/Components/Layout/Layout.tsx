@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
 import Header from "../Header/Header";
 import SearchBar from "../SearchBar/SearchBar";
-import { useUsers } from "../../context/useUsers";
+import { useUsersStore } from "../../useUsersStore";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const { handleSearch } = useUsers();
+  const handleSearch = useUsersStore((state) => state.handleSearch);
   
   return (
     <>

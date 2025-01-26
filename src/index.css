@@ -3,7 +3,7 @@
 :root {
   --background-color: #bdf1a6;
   --container-background-color: rgba(255, 255, 255, 0.329);
-  --text-color: #59636e;
+  --text-color: #556b57;
   --border-color: #84b66fad;
 
   --button-background-color: #97cb80ad;
@@ -12,7 +12,7 @@
 
   --header-background-color: rgba(255, 255, 255, 0.39);
   --search-input-background-color: rgba(255, 255, 255, 0.226);
-  --link-color: #59636e;
+  --link-color: #556b57;
 
   color-scheme: light;
 }
@@ -95,6 +95,7 @@ a {
 .container-posts {
   align-items: start;
 }
+
 
 .search {
   display: flex;
@@ -204,7 +205,7 @@ button:hover {
 }
 
 .card__user_posts:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .btnBack {
@@ -220,6 +221,14 @@ button:hover {
 .email-comment {
   border-top: 1px solid #d1d9e0;
   padding-top: 1.25rem;
+}
+
+.comments-post {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 500;
+  padding-top: 1rem;
 }
 
 .dark {
@@ -257,7 +266,7 @@ button:hover {
   }
 
   h2 {
-    font-size: 0.5rem;
+    font-size: 1.4rem;
   }
 
 }

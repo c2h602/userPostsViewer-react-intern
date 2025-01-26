@@ -1,10 +1,10 @@
-import { useUsers } from "../../context/useUsers";
+import { useUsersStore } from "../../useUsersStore";
 import { IUser } from "../../types/types";
 import { ItemList } from "../ItemList/ItemList";
 
 export const UsersList = () => {
   
-  const { filteredUsers, isSearching } = useUsers();
+  const { filteredUsers, isSearching } = useUsersStore();
  
   return (
     <ul className="card__list">

@@ -37,6 +37,7 @@ export const UsersContextProvider = ({
     const postsData: IPost[] = await postsResponse.json();
     const commentsData: IComment[] = await commentsRespose.json();
 
+    // связь постов с комментариями 
     const postsArr = postsData.map((post: IPost) => {
       const comments = commentsData.filter(
         (comment: IComment) => comment.postId === post.id
@@ -48,6 +49,7 @@ export const UsersContextProvider = ({
       };
     });
 
+    // связь юзеров с постами 
     const usersAndPosts = usersData.map((user: IUser) => {
       const posts = postsArr.filter((post: IPost) => post.userId === user.id);
 
